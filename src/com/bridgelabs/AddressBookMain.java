@@ -5,17 +5,17 @@
 
 package com.bridgelabs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 public class AddressBookMain {
     public static final ArrayList<contactInfo> contactList = new ArrayList<>();
     public static Map<String, contactInfo> nameHashMap = new HashMap<String, contactInfo>();
     public static Map<String, contactInfo> cityHashMap = new HashMap<String, contactInfo>();
     public static Map<String, contactInfo> stateHashMap = new HashMap<String, contactInfo>();
+
+    static Scanner sc = new Scanner(System.in);
+    static AddressBookMain addressBook = new AddressBookMain();
 
     public boolean addContact(contactInfo contact) {
         List<contactInfo> checkByName = searchByName(contact.getFirstName());
@@ -54,6 +54,15 @@ public class AddressBookMain {
     public static void viewByState(Map<String, contactInfo> stateHashMap) {
         stateHashMap.entrySet().stream().forEach(e -> System.out.println(e.getKey() + "=" + e.getValue().toString()));
     }
+
+    public List<contactInfo> sortBy(Function<? super contactInfo, ? extends String> key) {
+        return contactList.stream().sorted(Comparator.comparing(key)).collect(Collectors.toList());
+    }
+
+    public List<contactInfo> sortByZip(Function<? super contactInfo, ? extends Long> key) {
+        return contactList.stream().sorted(Comparator.comparing(key)).collect(Collectors.toList());
+    }
+
 
 
     // method for edit contact
@@ -116,7 +125,8 @@ public class AddressBookMain {
             System.out.println("2. Edit contact details");
             System.out.println("3. Delete contact details");
             System.out.println("4. Show contacts details");
-            System.out.println("5. Back to main menu");
+            System.out.println("5. Sort Address Book");
+            System.out.println("6. Back to main menu");
             System.out.print("Enter Your choice: ");
             int choice = sc.nextInt();
             sc.nextLine();
@@ -168,6 +178,9 @@ public class AddressBookMain {
                     System.out.println(addressBook.toString()); // call tostring method for showing details
                     break;
                 case 5:
+                    sortByOption();
+                    break;
+                case 6:
                     return;
                 default:
                     System.out.println("Invalid Choice!");
@@ -259,6 +272,40 @@ public class AddressBookMain {
                 return;
             default:
                 System.out.println("Invalid Option");
+        }
+    }
+
+    public static void sortByOption() {
+        System.out.println("1. By first name");
+        System.out.println("2. By last name");
+        System.out.println("3. By city");
+        System.out.println("4. By state");
+        System.out.println("5. By zip");
+        System.out.println("6. Back");
+        System.out.print("Your choice: ");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1:
+                addressBook.sortBy(contactInfo::getFirstName).forEach(System.out::println);
+                break;
+            case 2:
+                addressBook.sortBy(contactInfo::getLastName).forEach(System.out::println);
+                break;
+            case 3:
+                addressBook.sortBy(contactInfo::getCity).forEach(System.out::println);
+                break;
+            case 4:
+                addressBook.sortBy(contactInfo::getState).forEach(System.out::println);
+                break;
+            case 5:
+                addressBook.sortByZip(contactInfo::getZipCode).forEach(System.out::println);
+                break;
+            case 6:
+                return;
+            default:
+                System.out.println("INVALID CHOICE!");
         }
     }
 }
