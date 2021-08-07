@@ -1,2 +1,2 @@
-family[PersonInfo{first_name='Samarth', last_name='BM', address='SSLayout', city='dvg', state='karnataka', zip=577004, phone_number='9686762778', email='samarthbm18@gmail.com'}]
-friends[PersonInfo{first_name='sam', last_name='bms', address='samukhe', city='dvg', state='ktaa', zip=5202145, phone_number='5452665478', email='sam.com'}]
+Friends[PersonInfo{first_name='Karthik', last_name='P', address='KKNagar', city='banglore', state='karnataka', zip=522015, phone_number='9655444578', email='kkk.com'}]
+Family[PersonInfo{first_name='Samarth', last_name='BM', address='SSLayout', city='dvg', state='Karnataka', zip=577004, phone_number='9686762778', email='samarthbm18@gmail.com'}]

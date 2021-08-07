@@ -1,6 +1,5 @@
 package com.bridgelabs;
 
-
 import java.util.Scanner;
 import java.util.*;
 public class AddressBookRunner {
@@ -18,6 +17,7 @@ public class AddressBookRunner {
         Hashtable<String, ArrayList<contactInfo>> personInfoDict = new Hashtable<>();
         ReadWriteOperations readWriteObj = new ReadWriteOperations();
         ReadWriteCSVFile csvObj = new ReadWriteCSVFile();
+        ReadWriteJSONFile jsonObj = new ReadWriteJSONFile();
 
         boolean flag = true;
         int option;
@@ -29,6 +29,7 @@ public class AddressBookRunner {
                     personInfoDict = add_Book.insertContactDetails();
                     readWriteObj.writeInAddressBook(personInfoDict);
                     csvObj.writeCSVFile(personInfoDict);
+                    jsonObj.writeJSONFile(personInfoDict);
                     break;
                 case EDIT:
                     System.out.print("\n" + "Enter the name of the Address Book that you want to replace: ");
@@ -45,6 +46,7 @@ public class AddressBookRunner {
                     System.out.println("\n" + "Display all contacts in the Address Book");
                     readWriteObj.readFromAddressBook();
                     csvObj.readCSVFile();
+                    jsonObj.readJSONFile();
                     break;
                 case SEARCH_CITY:
                     System.out.println("\n" + "Search Address Book based on City or State");
