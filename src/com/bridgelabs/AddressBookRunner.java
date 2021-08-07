@@ -17,6 +17,7 @@ public class AddressBookRunner {
     public static void main(String args[]){
         Hashtable<String, ArrayList<contactInfo>> personInfoDict = new Hashtable<>();
         ReadWriteOperations readWriteObj = new ReadWriteOperations();
+        ReadWriteCSVFile csvObj = new ReadWriteCSVFile();
 
         boolean flag = true;
         int option;
@@ -27,7 +28,7 @@ public class AddressBookRunner {
                     System.out.println("\n" + "Add a new Address Book");
                     personInfoDict = add_Book.insertContactDetails();
                     readWriteObj.writeInAddressBook(personInfoDict);
-                    //System.out.println(personInfoDict + "\n");
+                    csvObj.writeCSVFile(personInfoDict);
                     break;
                 case EDIT:
                     System.out.print("\n" + "Enter the name of the Address Book that you want to replace: ");
@@ -42,8 +43,8 @@ public class AddressBookRunner {
                     break;
                 case DISPLAY:
                     System.out.println("\n" + "Display all contacts in the Address Book");
-                    //add_Book.displayCompanyContacts(personInfoDict);
                     readWriteObj.readFromAddressBook();
+                    csvObj.readCSVFile();
                     break;
                 case SEARCH_CITY:
                     System.out.println("\n" + "Search Address Book based on City or State");
