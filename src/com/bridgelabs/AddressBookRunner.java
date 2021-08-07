@@ -1,64 +1,63 @@
 package com.bridgelabs;
 
+
+import java.util.Scanner;
 import java.util.*;
-
 public class AddressBookRunner {
+    private static final int ADD = 1;
+    private static final int EDIT = 2;
+    private static final int DELETE = 3;
+    private static final int DISPLAY = 4;
+    private static final int SEARCH_CITY = 5;
+    private static final int SORT_DATA = 6;
+    private static final int QUIT = 7;
+    static AddressBookMain add_Book = new AddressBookMain();
+    static Scanner input = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        AddressBookMain addressBook = new AddressBookMain();
-        Map<String, AddressBookMain> addressBookMap = new HashMap<String, AddressBookMain>();
+    public static void main(String args[]){
+        Hashtable<String, ArrayList<contactInfo>> personInfoDict = new Hashtable<>();
+        ReadWriteOperations readWriteObj = new ReadWriteOperations();
 
-        while (true) {
-            System.out.println("\nWelcome to Address Book System");
-            System.out.println("1. New Address Book \n2. Select Address Book \n3. Delete Address Book \n4. "
-                    + "Search Contact Data \n5.View Contact Data \n6.Count Contacts \n7. Exit");
-            System.out.print("Enter Your choice: ");
-            int choice = sc.nextInt();
-            sc.nextLine();
-            switch (choice) {
-                case 1:
-                    System.out.println("Enter Name of new Address Book: ");
-                    String bookName = sc.next();
-                    sc.nextLine();
-                    addressBookMap.put(bookName, new AddressBookMain());// adding book name as a key and value is allocating
-                    // memory for address book object
-                    AddressBookMain.addressBookOptions(addressBookMap.get(bookName));
-                    // passing key of hashmap
+        boolean flag = true;
+        int option;
+        while(flag) {
+            option = UserInputOutput.menu();
+            switch (option) {
+                case ADD:
+                    System.out.println("\n" + "Add a new Address Book");
+                    personInfoDict = add_Book.insertContactDetails();
+                    readWriteObj.writeInAddressBook(personInfoDict);
+                    //System.out.println(personInfoDict + "\n");
                     break;
-                case 2:
-                    System.out.println("List of available Address Book : ");
-                    Set<String> keys = addressBookMap.keySet();
-                    Iterator<String> i = keys.iterator();
-                    while (i.hasNext()) {
-                        System.out.println(i.next());
-                    }
-                    System.out.println("Enter Address Book name you want to Open : ");
-                    String name = sc.nextLine();
-                    System.out.println("Current Address Book is : " + name);
-                    AddressBookMain.addressBookOptions(addressBookMap.get(name));// call method with passing address book name
+                case EDIT:
+                    System.out.print("\n" + "Enter the name of the Address Book that you want to replace: ");
+                    String companyName = input.next();
+
+                    add_Book.updateContact(companyName, personInfoDict);
                     break;
-                case 3:
-                    System.out.println("Enter Address Book name to be delete: ");
-                    name = sc.nextLine();
-                    addressBookMap.remove(name);// delete hashmap using remove fun
+                case DELETE:
+                    System.out.print("\n" + "Enter the name of the Address Book that you want to delete: ");
+                    String deletedName = input.next();
+                    add_Book.deleteContact(deletedName, personInfoDict);
                     break;
-                case 4:
-                    System.out.println("Welcome to the search option:");
-                    addressBook.searchByOptions();
-                case 5:
-                    System.out.println("Welcome to view By Option:");
-                    AddressBookMain.viewByOption(addressBookMap);
+                case DISPLAY:
+                    System.out.println("\n" + "Display all contacts in the Address Book");
+                    //add_Book.displayCompanyContacts(personInfoDict);
+                    readWriteObj.readFromAddressBook();
                     break;
-                case 6:
-                    System.out.println("Welcome to the couter");
-                    AddressBookMain.countByOption();
+                case SEARCH_CITY:
+                    System.out.println("\n" + "Search Address Book based on City or State");
+                    add_Book.searchPerson();
+                    flag = true;
                     break;
-                case 7:
-                    sc.close();// for closing the programme
-                    return;
-                default:
-                    System.out.println("You Entered Invalid Choice....!");
+                case SORT_DATA:
+                    System.out.println("\n" + "Sort Address Book");
+                    add_Book.sortPerson();
+                    flag = true;
+                    break;
+                case QUIT:
+                    flag = false;
+                    System.out.println("\n" + "Thank you for referring the address book.");
                     break;
             }
         }

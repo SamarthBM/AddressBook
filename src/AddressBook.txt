@@ -1,0 +1,2 @@
+family[PersonInfo{first_name='samarth', last_name='BM', address='samukhe', city='dvg', state='karnataka', zip=577004, phone_number='9686762778', email='sam.com'}]
+firends[PersonInfo{first_name='rahul', last_name='KL', address='layout', city='dvg', state='ktaka', zip=54255, phone_number='952232147814', email='sss.com'}]
