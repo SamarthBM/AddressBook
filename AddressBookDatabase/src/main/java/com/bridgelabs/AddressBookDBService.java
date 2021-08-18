@@ -17,7 +17,6 @@ public class AddressBookDBService {
      *
      * @return
      */
-
     public static AddressBookDBService getInstance() {
         if ( addressBookDBService == null)
             addressBookDBService = new AddressBookDBService();
@@ -30,7 +29,6 @@ public class AddressBookDBService {
      * @return
      * @throws SQLException
      */
-
     private Connection getConnection() throws SQLException {
         String jdbcURL = "jdbc:mysql://localhost:3306/address_book?useSSL=false";
         String userName = "root";
@@ -49,7 +47,6 @@ public class AddressBookDBService {
      * @param sql
      * @return
      */
-
     private List<contactInfo> getEmployeePayrollDataUsingDB(String sql) {
         List<contactInfo> personInfoList = new ArrayList<>();
         try (Connection connection = this.getConnection()) {
@@ -79,7 +76,6 @@ public class AddressBookDBService {
      *
      * @return
      */
-
     public List<contactInfo> readData() {
         String sql = "SELECT * FROM addressbook";
         return getEmployeePayrollDataUsingDB(sql);
