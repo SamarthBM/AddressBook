@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelabs.AddressBookTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-08-18T08:29:46" hostname="DESKTOP-IB61PHE" time="0.511">
+  <properties/>
+  <testcase name="givenPersonInfoInDB_WhenRetrieved_ShouldMatchEmployeeCount" classname="com.bridgelabs.AddressBookTest" time="0.511"/>
+  <system-out><![CDATA[Connecting to database: jdbc:mysql://localhost:3306/address_book?useSSL=false
+Connection is successful! com.mysql.cj.jdbc.ConnectionImpl@c9b091a
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

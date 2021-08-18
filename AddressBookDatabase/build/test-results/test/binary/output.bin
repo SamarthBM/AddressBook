@@ -1,0 +1,2 @@
+OConnecting to database: jdbc:mysql://localhost:3306/address_book?useSSL=false
+DConnection is successful! com.mysql.cj.jdbc.ConnectionImpl@c9b091a
