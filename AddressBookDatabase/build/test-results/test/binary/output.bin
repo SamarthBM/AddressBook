@@ -1,2 +1,6 @@
 OConnecting to database: jdbc:mysql://localhost:3306/address_book?useSSL=false
 DConnection is successful! com.mysql.cj.jdbc.ConnectionImpl@c9b091a
+OConnecting to database: jdbc:mysql://localhost:3306/address_book?useSSL=false
+EConnection is successful! com.mysql.cj.jdbc.ConnectionImpl@5eaf6cfb
+OConnecting to database: jdbc:mysql://localhost:3306/address_book?useSSL=false
+EConnection is successful! com.mysql.cj.jdbc.ConnectionImpl@4b07027e

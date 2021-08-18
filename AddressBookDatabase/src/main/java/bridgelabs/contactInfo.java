@@ -4,18 +4,19 @@
  ***************************************************************/
 
 package bridgelabs;
-import com.google.gson.JsonElement;
 
 public class contactInfo {
-    int id;
-    String first_name;
-    String last_name;
-    String address;
-    String city;
-    String state;
-    int zip;
-    String phone_number;
-    String email;
+
+    public int SlNo;
+    public String type;
+    public String first_name;
+    public String last_name;
+    public String address;
+    public String city;
+    public String state;
+    public int zip;
+    public String phone_number;
+    public String email;
 
     public contactInfo() {
     }
@@ -31,9 +32,10 @@ public class contactInfo {
         this.email = email;
     }
 
-    public contactInfo(int id,String first_name, String last_name, String address, String city, String state, int zip, String phone_number, String email) {
+    public contactInfo(int SlNo, String type, String first_name, String last_name, String address, String city, String state, int zip, String phone_number, String email) {
         this(first_name, last_name, address, city, state, zip, phone_number, email);
-        this.id = id;
+        this.SlNo = SlNo;
+        this.type = type;
     }
 
     public String getFirst_name() {

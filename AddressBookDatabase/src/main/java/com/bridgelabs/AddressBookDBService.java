@@ -9,6 +9,7 @@ import java.util.List;
 
 public class AddressBookDBService {
     private static AddressBookDBService addressBookDBService;
+    private PreparedStatement personInfoDataStatement;
     private AddressBookDBService() {
     }
 
@@ -53,7 +54,7 @@ public class AddressBookDBService {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-                int id = result.getInt("SlNo");
+                int SlNo = result.getInt("SlNo");
                 String type = result.getString("type");
                 String fname = result.getString("firstname");
                 String lname = result.getString("lastname");
@@ -63,7 +64,7 @@ public class AddressBookDBService {
                 int zip = result.getInt("zip");
                 String phoneNo = result.getString("phonenumber");
                 String email = result.getString("emailid");
-                personInfoList.add(new contactInfo(id, fname, lname, address, city, state, zip, phoneNo, email));
+                personInfoList.add(new contactInfo(SlNo, type, fname, lname, address, city, state, zip, phoneNo, email));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,5 +80,97 @@ public class AddressBookDBService {
     public List<contactInfo> readData() {
         String sql = "SELECT * FROM addressbook";
         return getEmployeePayrollDataUsingDB(sql);
+    }
+    /**
+     * Purpose : Update the state in the DB using Statement Interface
+     *
+     * @param name
+     * @param state
+     * @return
+     */
+    public int updatePersonInfo(String name, String state) {
+        return this.updatePersonInfoUsingStatement(name,state);
+    }
+
+    /**
+     * Purpose : Update the state in the DB using Statement Interface
+     *
+     * @param name
+     * @param state
+     * @return
+     */
+    private int updatePersonInfoUsingStatement(String name, String state) {
+        String sql = String.format("UPDATE addressbook SET state = '%s' WHERE firstname = '%s';", state, name);
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * Purpose : Get the list of PersonInfoData using the assigned name
+     *           setString() is used to set the assigned name value in the sql query
+     *           Return all the attribute values listed for a particular name
+     *
+     * @param name
+     * @return
+     */
+    public List<contactInfo> getPersonInfoData(String name) {
+        List<contactInfo> personInfoList = null;
+        if(this.personInfoDataStatement == null)
+            this.preparedStatementForPersonInfo();
+        try {
+            personInfoDataStatement.setString(1, name);
+            ResultSet resultSet = personInfoDataStatement.executeQuery();
+            personInfoList = this.getPersonInfoData(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personInfoList;
+    }
+
+    /**
+     * Purpose : Assign the value of the attributes in a list and return it
+     *
+     * @param resultSet
+     * @return
+     */
+    private List<contactInfo> getPersonInfoData(ResultSet resultSet) {
+        List<contactInfo> personInfoList = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                int SlNo = resultSet.getInt("SlNo");
+                String type = resultSet.getString("type");
+                String fname = resultSet.getString("firstname");
+                String lname = resultSet.getString("lastname");
+                String address = resultSet.getString("address");
+                String city = resultSet.getString("city");
+                String state = resultSet.getString("state");
+                int zip = resultSet.getInt("zip");
+                String phoneNo = resultSet.getString("phonenumber");
+                String email = resultSet.getString("emailid");
+                personInfoList.add(new contactInfo(SlNo, type, fname, lname, address, city, state, zip, phoneNo, email));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personInfoList;
+    }
+
+    /**
+     * Purpose : To get the details of a particular person from the DB using PreparedStatement Interface
+     */
+
+    private void preparedStatementForPersonInfo() {
+        try {
+            Connection connection = this.getConnection();
+            String sql = "SELECT * FROM addressbook WHERE firstname = ?";
+            personInfoDataStatement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
